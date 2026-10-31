@@ -1,0 +1,11 @@
+{
+  "name": "better-tab-switcher-zen-mod",
+  "private": true,
+  "description": "Development scripts for the Better Tab Switcher Zen mod",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
