@@ -34,3 +34,25 @@
 | Show tabs from all spaces | off by default |
 | Overlay show delay, ms | number, default 150, `0` shows it immediately |
 | Maximum cards | number from 2, default 9 |
+
+## Development
+
+The script is split into small classes, each with one job:
+
+| Part | Responsibility |
+|---|---|
+| `BetterTabSwitcher` | wires everything to the window's keyboard and tab events |
+| `KeyboardShortcuts` | turns key presses into switcher commands |
+| `TabSwitcher`, `CardSelection` | one Ctrl+Tab gesture: begin, move, commit, cancel |
+| `collectSwitchableTabs` | which tabs are offered: space, Essentials, card limit |
+| `TabHistory` | tabs in the order of use (MRU) |
+| `TabPreviews` | page snapshots for the cards |
+| `SwitcherOverlay` | the overlay DOM; styles live in `chrome.css` |
+| `Settings` | the prefs from `preferences.json` |
+| `ZenWindow` | the only code that touches `gBrowser` and `gZenWorkspaces` |
+
+Tests run the script in Node against a fake Zen window and need no dependencies (Node 20 or newer):
+
+```sh
+npm test
+```

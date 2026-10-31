@@ -335,6 +335,32 @@ describe("recent-use order", () => {
     assert.deepEqual(zen.overlay.titles, ["A", "C", "B"]);
   });
 
+  it("does not count a tab that something else selects while the switcher is open", () => {
+    const zen = new ZenWindowDriver({ tabs: ["A", "B", "C", "D"] }).loadScript();
+    zen.visit("A", "B", "C", "D");
+    openSwitcher(zen);
+
+    zen.visit("A"); // e.g. a page focuses its tab while Ctrl is held
+    zen.releaseCtrl();
+    openSwitcher(zen);
+
+    assert.deepEqual(zen.overlay.titles, ["C", "D", "B", "A"]);
+  });
+
+  it("counts the picked tab even when something else selected it during the switch", () => {
+    const zen = new ZenWindowDriver({ tabs: ["A", "B", "C", "D"] }).loadScript();
+    zen.visit("A", "B", "C", "D");
+    openSwitcher(zen, { times: 3 });
+    assert.equal(zen.overlay.selectedTitle, "A");
+
+    zen.visit("A");
+    zen.releaseCtrl();
+    zen.visit("B");
+    zen.tapCtrlTab();
+
+    assert.equal(zen.selectedLabel, "A");
+  });
+
   it("forgets closed tabs", () => {
     const zen = zenWithRecentTabs();
     zen.closeTab("B");

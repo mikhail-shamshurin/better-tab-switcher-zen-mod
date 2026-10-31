@@ -1,7 +1,8 @@
-/* Better Tab Switcher: Ctrl+Tab overlay */
+/* Better Tab Switcher: the Ctrl+Tab overlay built by better-tab-switcher.uc.js */
 
-/* Theme colors: everything comes from Zen/Firefox variables so the panel
-   follows the selected theme, accent and background (light/dark, gradient). */
+/* ---- Theme ----
+   Every color comes from Zen/Firefox variables, so the overlay follows the selected
+   theme, accent and background (light, dark, gradient). */
 :root {
   --bts-fg: var(--toolbar-color, var(--lwt-text-color, CanvasText));
   --bts-bg: var(--zen-colors-tertiary, var(--toolbar-bgcolor, Canvas));
@@ -9,10 +10,17 @@
   --bts-accent: var(--zen-primary-color, var(--focus-outline-color, Highlight));
 }
 
+/* ---- Overlay: dims and blurs the window behind the cards ---- */
 #bts {
+  /* Card geometry. The script captures previews about twice the card width. */
+  --bts-preview-width: 240px;
+  --bts-preview-height: 150px;
+  --bts-card-padding: 20px;
+  --bts-card-gap: 10px;
+
   position: fixed;
   inset: 0;
-  z-index: 2147483000;
+  z-index: 2147483000; /* above every layer of the browser UI */
   display: none;
   align-items: center;
   justify-content: center;
@@ -27,6 +35,12 @@
   animation: bts-in 90ms ease-out;
 }
 
+@keyframes bts-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ---- Panel with the cards ---- */
 .bts-row {
   display: flex;
   flex-wrap: wrap;
@@ -38,20 +52,21 @@
   overflow: hidden;
   border-radius: 28px;
   color: var(--bts-fg);
-  /* Same background as the Zen window (theme gradient/color, texture), anchored to the window. */
+  /* The same background as the Zen window (theme gradient or color, texture), anchored to the window. */
   background: var(--zen-main-browser-background, var(--bts-bg));
   background-attachment: fixed;
   border: 1px solid var(--bts-border);
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
 }
 
+/* ---- Card: page preview on top, icon and title below ---- */
 .bts-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--bts-card-gap);
   flex: 0 0 auto;
-  width: 280px;
-  padding: 20px;
+  width: calc(var(--bts-preview-width) + 2 * var(--bts-card-padding));
+  padding: var(--bts-card-padding);
   box-sizing: border-box;
   border-radius: 14px;
   color: var(--bts-fg);
@@ -64,8 +79,8 @@
 }
 
 .bts-preview {
-  width: 240px;
-  height: 150px;
+  width: var(--bts-preview-width);
+  height: var(--bts-preview-height);
   overflow: hidden;
   border-radius: 8px;
   background: color-mix(in srgb, var(--bts-fg) 8%, transparent);
@@ -82,7 +97,7 @@
 .bts-footer {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--bts-card-gap);
   min-width: 0;
 }
 
@@ -106,12 +121,8 @@
   text-overflow: ellipsis;
 }
 
+/* ---- Reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
   #bts[open="true"] { animation: none; }
   .bts-card { transition: none; }
-}
-
-@keyframes bts-in {
-  from { opacity: 0; transform: scale(0.97); }
-  to { opacity: 1; transform: scale(1); }
 }
