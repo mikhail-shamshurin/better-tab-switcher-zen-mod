@@ -1,0 +1,20 @@
+[
+  {
+    "property": "uc.bettertabswitcher.all_spaces",
+    "label": "Показывать вкладки всех пространств",
+    "type": "checkbox",
+    "defaultValue": false
+  },
+  {
+    "property": "uc.bettertabswitcher.show_delay",
+    "label": "Задержка показа оверлея, мс (0 — сразу)",
+    "type": "string",
+    "placeholder": "150"
+  },
+  {
+    "property": "uc.bettertabswitcher.max_tabs",
+    "label": "Максимум карточек",
+    "type": "string",
+    "placeholder": "9"
+  }
+]

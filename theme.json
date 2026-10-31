@@ -1,0 +1,24 @@
+{
+  "id": "better-tab-switcher",
+  "name": "Better Tab Switcher",
+  "description": "Ctrl+Tab с превью страниц: последние вкладки, выбор по отпусканию Ctrl.",
+  "homepage": "https://github.com/mikhail-shamshurin/better-tab-switcher-zen-mod",
+  "style": { "chrome": "chrome.css" },
+  "preferences": "preferences.json",
+  "readme": "README.md",
+  "image": "image.png",
+  "author": "mikhail-shamshurin",
+  "version": "0.1.0",
+  "tags": ["tabs", "keyboard"],
+  "fork": ["zen"],
+  "scripts": {
+    "better-tab-switcher.uc.js": {
+      "name": "Better Tab Switcher",
+      "description": "MRU-переключатель вкладок по Ctrl+Tab",
+      "include": ["chrome://browser/content/browser.xhtml"]
+    }
+  },
+  "supportsUnload": true,
+  "createdAt": "2026-11-01",
+  "updatedAt": "2026-11-01"
+}
