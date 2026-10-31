@@ -1,7 +1,7 @@
-/* Better Tab Switcher: оверлей Ctrl+Tab */
+/* Better Tab Switcher: Ctrl+Tab overlay */
 
-/* Цвета темы: всё берётся из переменных Zen/Firefox, чтобы панель
-   следовала выбранной теме, акценту и фону (светлая/тёмная, градиент). */
+/* Theme colors: everything comes from Zen/Firefox variables so the panel
+   follows the selected theme, accent and background (light/dark, gradient). */
 :root {
   --bts-fg: var(--toolbar-color, var(--lwt-text-color, CanvasText));
   --bts-bg: var(--zen-colors-tertiary, var(--toolbar-bgcolor, Canvas));
@@ -38,7 +38,7 @@
   overflow: hidden;
   border-radius: 28px;
   color: var(--bts-fg);
-  /* Тот же фон, что у окна Zen (градиент/цвет темы, текстура), привязан к окну. */
+  /* Same background as the Zen window (theme gradient/color, texture), anchored to the window. */
   background: var(--zen-main-browser-background, var(--bts-bg));
   background-attachment: fixed;
   border: 1px solid var(--bts-border);

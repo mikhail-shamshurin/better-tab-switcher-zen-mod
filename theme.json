@@ -1,7 +1,7 @@
 {
   "id": "better-tab-switcher",
   "name": "Better Tab Switcher",
-  "description": "Ctrl+Tab с превью страниц: последние вкладки, выбор по отпусканию Ctrl.",
+  "description": "Ctrl+Tab with page previews: recent tabs, pick by releasing Ctrl.",
   "homepage": "https://github.com/mikhail-shamshurin/better-tab-switcher-zen-mod",
   "style": { "chrome": "chrome.css" },
   "preferences": "preferences.json",
@@ -14,7 +14,7 @@
   "scripts": {
     "better-tab-switcher.uc.js": {
       "name": "Better Tab Switcher",
-      "description": "MRU-переключатель вкладок по Ctrl+Tab",
+      "description": "MRU tab switcher on Ctrl+Tab",
       "include": ["chrome://browser/content/browser.xhtml"]
     }
   },

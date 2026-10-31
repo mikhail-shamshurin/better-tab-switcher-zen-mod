@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           Better Tab Switcher
-// @description    MRU-переключатель вкладок по Ctrl+Tab с превью страниц
+// @description    MRU tab switcher on Ctrl+Tab with page previews
 // @include        main
 // ==/UserScript==
 
@@ -44,7 +44,7 @@
   }
 
   // ---------- MRU ----------
-  /** @type {MozTabbrowserTab[]} самая свежая в конце */
+  /** @type {MozTabbrowserTab[]} most recent last */
   let mru = [];
 
   function touch(tab) {
@@ -58,7 +58,7 @@
     touch(gBrowser.selectedTab);
   }
   function onTabSelect() {
-    // Во время переключения MRU не трогаем: порядок фиксируется на commit.
+    // Leave the MRU alone while switching: the order is fixed on commit.
     if (state.active) return;
     touch(gBrowser.selectedTab);
     scheduleCapture();
@@ -102,7 +102,7 @@
       }
       out.push(t);
     }
-    // Текущая вкладка обязана быть первой.
+    // The current tab must come first.
     const si = out.indexOf(sel);
     if (si > 0) {
       out.splice(si, 1);
@@ -123,9 +123,9 @@
     root: null,
   };
 
-  // ---------- превью страниц ----------
+  // ---------- page previews ----------
   const THUMB_W = 280;
-  /** @type {WeakMap<object, string>} вкладка -> dataURL снимка */
+  /** @type {WeakMap<object, string>} tab -> snapshot dataURL */
   const thumbs = new WeakMap();
   let captureTimer = null;
 
@@ -146,7 +146,7 @@
       bmp.close?.();
       thumbs.set(tab, canvas.toDataURL("image/jpeg", 0.7));
     } catch (e) {
-      // Снимок недоступен (вкладка выгружена, служебная страница): карточка без превью.
+      // Snapshot unavailable (discarded tab, internal page): the card shows no preview.
     }
   }
 
@@ -249,7 +249,7 @@
   function step(backwards) {
     const n = state.list.length;
     state.index = (state.index + (backwards ? -1 : 1) + n) % n;
-    // Пользователь продолжает листать: оверлей нужен сразу.
+    // The user keeps cycling: show the overlay right away.
     if (!state.shown) {
       if (state.timer) clearTimeout(state.timer);
       show();

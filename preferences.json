@@ -1,19 +1,19 @@
 [
   {
     "property": "uc.bettertabswitcher.all_spaces",
-    "label": "Показывать вкладки всех пространств",
+    "label": "Show tabs from all spaces",
     "type": "checkbox",
     "defaultValue": false
   },
   {
     "property": "uc.bettertabswitcher.show_delay",
-    "label": "Задержка показа оверлея, мс (0 — сразу)",
+    "label": "Overlay show delay, ms (0 = immediately)",
     "type": "string",
     "placeholder": "150"
   },
   {
     "property": "uc.bettertabswitcher.max_tabs",
-    "label": "Максимум карточек",
+    "label": "Maximum cards",
     "type": "string",
     "placeholder": "9"
   }
