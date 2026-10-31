@@ -1,32 +1,36 @@
+<p align="center">
+  <b>English</b> · <a href="README.ru.md">Русский</a>
+</p>
+
 <h1 align="center">Better Tab Switcher (Ctrl+Tab)</h1>
 
 <p align="center">
-  Переключатель вкладок для <a href="https://zen-browser.app">Zen Browser</a>: превью страниц и цвета вашей темы.
+  A tab switcher for <a href="https://zen-browser.app">Zen Browser</a>: page previews and the colors of your theme.
 </p>
 
 <p align="center">
-  <img src="docs/screenshot.png" alt="Оверлей Ctrl+Tab с превью вкладок в Zen Browser" width="820">
+  <img src="docs/screenshot.png" alt="Ctrl+Tab overlay with tab previews in Zen Browser" width="820">
 </p>
 
-## Возможности
+## Features
 
-- Поверх страницы появляются карточки с превью последних вкладок, пока держишь Ctrl. Tab листает вперёд, Shift+Tab назад, отпускание Ctrl открывает выбранную вкладку.
-- Фон, цвета и акцент берутся из темы, которую настроил пользователь: светлая, тёмная, градиент.
-- Быстрое нажатие Ctrl+Tab сразу возвращает на предыдущую вкладку, оверлей не мигает (задержка показа настраивается).
-- Порядок вкладок по давности использования (MRU).
-- Стрелки листают, Enter подтверждает, Esc отменяет, клик по карточке выбирает её.
-- По умолчанию показываются вкладки текущего пространства и Essentials.
+- While you hold Ctrl, cards with previews of your recent tabs appear over the page. Tab moves forward, Shift+Tab moves back, releasing Ctrl opens the selected tab.
+- Background, colors and accent come from the theme you configured: light, dark or gradient.
+- A quick Ctrl+Tab press jumps straight to the previous tab without flashing the overlay (the show delay is configurable).
+- Tabs are ordered by recent use (MRU).
+- Arrow keys move the selection, Enter confirms, Esc cancels, clicking a card selects it.
+- By default, tabs of the current space and Essentials are shown.
 
-## Установка
+## Installation
 
-1. Sine → Settings → включи «Enable installing JS from unofficial sources» (`sine.allow-unsafe-js`), потому что мод содержит JS.
-2. Установи мод из репозитория через менеджер Sine.
-3. Перезапусти Zen.
+1. In Sine open Settings and enable "Enable installing JS from unofficial sources" (`sine.allow-unsafe-js`), because the mod contains JS.
+2. Install the mod from this repository with the Sine manager.
+3. Restart Zen.
 
-## Настройки
+## Settings
 
-| Настройка | Значение |
+| Setting | Value |
 |---|---|
-| Показывать вкладки всех пространств | выкл по умолчанию |
-| Задержка показа оверлея, мс | число, по умолчанию 150, `0` — сразу |
-| Максимум карточек | число от 2, по умолчанию 9 |
+| Show tabs from all spaces | off by default |
+| Overlay show delay, ms | number, default 150, `0` shows it immediately |
+| Maximum cards | number from 2, default 9 |
