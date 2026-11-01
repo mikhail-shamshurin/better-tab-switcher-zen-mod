@@ -211,10 +211,10 @@
       this.#showOverlay();
     }
 
-    /** The mouse moved onto a card: it becomes selected, like an arrow key would, without switching yet. */
+    /** Only the "selected" attribute moves: rebuilding the cards here would replace the one the mouse is over mid-click, dropping the click. */
     hover(index) {
       this.#selection.select(index);
-      this.#showOverlay();
+      this.#overlay.highlight(index);
     }
 
     pick(index) {
@@ -455,6 +455,8 @@
     #onPick;
     #onHover;
     #root = null;
+    /** @type {HTMLElement[]} the cards shown by the last render(), in order */
+    #cards = [];
 
     constructor(document, previews, onPick, onHover) {
       this.#document = document;
@@ -473,14 +475,24 @@
       root.setAttribute("open", "true");
     }
 
+    /** Moves the "selected" card without touching the DOM nodes, so a click in flight survives. */
+    highlight(index) {
+      this.#cards.forEach((card, cardIndex) => {
+        if (cardIndex === index) card.setAttribute("selected", "true");
+        else card.removeAttribute("selected");
+      });
+    }
+
     hide() {
       this.#root?.removeAttribute("open");
       this.#root?.replaceChildren();
+      this.#cards = [];
     }
 
     remove() {
       this.#root?.remove();
       this.#root = null;
+      this.#cards = [];
     }
 
     #ensureRoot() {
@@ -499,7 +511,8 @@
 
     #createRow(tabs, selectedIndex) {
       const row = this.#createElement("div", "bts-row");
-      row.append(...tabs.map((tab, index) => this.#createCard(tab, index, index === selectedIndex)));
+      this.#cards = tabs.map((tab, index) => this.#createCard(tab, index, index === selectedIndex));
+      row.append(...this.#cards);
       return row;
     }
 
