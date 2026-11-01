@@ -119,8 +119,9 @@ class FakeElement extends FakeEventTarget {
     this.parentNode = null;
   }
 
+  /** The mod picks a card on mousedown (a click never reaches it in the real chrome window). */
   click() {
-    this.dispatchEvent(new FakeEvent("click"));
+    this.dispatchEvent(new FakeEvent("mousedown"));
   }
 
   hover() {

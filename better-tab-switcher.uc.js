@@ -520,7 +520,8 @@
       const card = this.#createElement("div", "bts-card");
       if (isSelected) card.setAttribute("selected", "true");
       card.append(this.#createPreview(tab), this.#createFooter(tab));
-      card.addEventListener("click", () => this.#onPick(index));
+      // mousedown, not click: a click after this root's own preventDefault never reaches the card.
+      card.addEventListener("mousedown", () => this.#onPick(index));
       card.addEventListener("mouseenter", () => this.#onHover(index));
       return card;
     }
