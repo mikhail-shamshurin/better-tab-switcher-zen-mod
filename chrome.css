@@ -71,6 +71,7 @@
   border-radius: 14px;
   color: var(--bts-fg);
   background: transparent;
+  cursor: pointer;
   transition: background 80ms ease;
 }
 

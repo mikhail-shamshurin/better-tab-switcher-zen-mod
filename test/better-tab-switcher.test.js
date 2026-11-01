@@ -171,6 +171,28 @@ describe("holding Ctrl", () => {
     assert.equal(zen.overlay.isOpen, false);
   });
 
+  it("selects a card the mouse moves onto, without switching yet", () => {
+    const zen = zenWithRecentTabs();
+    openSwitcher(zen);
+
+    zen.overlay.cards[2].hover();
+
+    assert.equal(zen.overlay.selectedTitle, "A");
+    assert.equal(zen.overlay.isOpen, true);
+    assert.equal(zen.selectedLabel, "C");
+  });
+
+  it("switches to the card last hovered when Ctrl is released", () => {
+    const zen = zenWithRecentTabs();
+    openSwitcher(zen);
+
+    zen.overlay.cards[2].hover();
+    zen.releaseCtrl();
+
+    assert.equal(zen.selectedLabel, "A");
+    assert.equal(zen.overlay.isOpen, false);
+  });
+
   it("shows each tab's icon, with a default icon when the tab has none", () => {
     const zen = new ZenWindowDriver({
       tabs: [{ label: "A", attributes: { image: "https://a.example/favicon.ico" } }, "B"],

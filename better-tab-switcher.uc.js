@@ -184,7 +184,12 @@
       this.#history = history;
       this.#previews = previews;
       this.#settings = settings;
-      this.#overlay = new SwitcherOverlay(document, previews, index => this.pick(index));
+      this.#overlay = new SwitcherOverlay(
+        document,
+        previews,
+        index => this.pick(index),
+        index => this.hover(index)
+      );
     }
 
     get isActive() {
@@ -203,6 +208,12 @@
     /** The user keeps cycling, so the cards are shown right away. */
     move(direction) {
       this.#selection.move(direction);
+      this.#showOverlay();
+    }
+
+    /** The mouse moved onto a card: it becomes selected, like an arrow key would, without switching yet. */
+    hover(index) {
+      this.#selection.select(index);
       this.#showOverlay();
     }
 
@@ -442,12 +453,14 @@
     #document;
     #previews;
     #onPick;
+    #onHover;
     #root = null;
 
-    constructor(document, previews, onPick) {
+    constructor(document, previews, onPick, onHover) {
       this.#document = document;
       this.#previews = previews;
       this.#onPick = onPick;
+      this.#onHover = onHover;
     }
 
     get isVisible() {
@@ -495,6 +508,7 @@
       if (isSelected) card.setAttribute("selected", "true");
       card.append(this.#createPreview(tab), this.#createFooter(tab));
       card.addEventListener("click", () => this.#onPick(index));
+      card.addEventListener("mouseenter", () => this.#onHover(index));
       return card;
     }
 

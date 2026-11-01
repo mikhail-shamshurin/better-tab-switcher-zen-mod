@@ -123,6 +123,10 @@ class FakeElement extends FakeEventTarget {
     this.dispatchEvent(new FakeEvent("click"));
   }
 
+  hover() {
+    this.dispatchEvent(new FakeEvent("mouseenter"));
+  }
+
   findAll(predicate) {
     const found = [];
     for (const child of this.children) {
