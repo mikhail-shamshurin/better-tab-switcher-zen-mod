@@ -193,6 +193,46 @@ describe("holding Ctrl", () => {
     assert.equal(zen.overlay.isOpen, false);
   });
 
+  it("ignores a stationary pointer when the overlay opens", () => {
+    const zen = zenWithRecentTabs();
+    openSwitcher(zen);
+
+    zen.overlay.cards[2].enterWithoutMoving();
+    assert.equal(zen.overlay.selectedTitle, "B");
+    zen.releaseCtrl();
+    assert.equal(zen.selectedLabel, "B");
+  });
+
+  for (const key of ["Tab", "ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"]) {
+    it(`ignores a stationary pointer after ${key}, until the mouse moves again`, () => {
+      const zen = zenWithRecentTabs();
+      openSwitcher(zen);
+      zen.overlay.cards[1].hover();
+
+      zen.press(key);
+      const expected = ["ArrowLeft", "ArrowUp"].includes(key) ? "C" : "A";
+      zen.overlay.cards[1].enterWithoutMoving();
+      assert.equal(zen.overlay.selectedTitle, expected);
+
+      zen.overlay.cards[1].moveMouse({ movementX: 0, movementY: -1 });
+      assert.equal(zen.overlay.selectedTitle, "B");
+
+      zen.press(key);
+      zen.overlay.cards[1].enterWithoutMoving();
+      zen.releaseCtrl();
+      assert.equal(zen.selectedLabel, expected);
+    });
+  }
+
+  it("selects a card when the mouse moves within it", () => {
+    const zen = zenWithRecentTabs();
+    openSwitcher(zen);
+
+    zen.overlay.cards[2].moveMouse();
+
+    assert.equal(zen.overlay.selectedTitle, "A");
+  });
+
   it("shows each tab's icon, with a default icon when the tab has none", () => {
     const zen = new ZenWindowDriver({
       tabs: [{ label: "A", attributes: { image: "https://a.example/favicon.ico" } }, "B"],

@@ -18,7 +18,7 @@
 - Background, colors and accent come from the theme you configured: light, dark or gradient.
 - A quick Ctrl+Tab press jumps straight to the previous tab without flashing the overlay (the show delay is configurable).
 - Tabs are ordered by recent use (MRU).
-- Arrow keys move the selection, Enter confirms, Esc cancels. While Ctrl is held, moving the mouse onto a card selects it too, and clicking it switches right away.
+- Arrow keys move the selection, Enter confirms, Esc cancels. Mouse movement selects a card while Ctrl is held. Keyboard navigation ignores a stationary pointer until the mouse moves again. Clicking switches immediately.
 - By default, tabs of the current space and Essentials are shown.
 
 ## Installation

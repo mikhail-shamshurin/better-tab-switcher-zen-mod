@@ -126,6 +126,16 @@ class FakeElement extends FakeEventTarget {
 
   hover() {
     this.dispatchEvent(new FakeEvent("mouseenter"));
+    this.moveMouse();
+  }
+
+  moveMouse({ movementX = 1, movementY = 0 } = {}) {
+    this.dispatchEvent(new FakeEvent("mousemove", { movementX, movementY }));
+  }
+
+  enterWithoutMoving() {
+    this.dispatchEvent(new FakeEvent("mouseenter"));
+    this.moveMouse({ movementX: 0, movementY: 0 });
   }
 
   findAll(predicate) {

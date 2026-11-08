@@ -522,7 +522,10 @@
       card.append(this.#createPreview(tab), this.#createFooter(tab));
       // mousedown, not click: a click after this root's own preventDefault never reaches the card.
       card.addEventListener("mousedown", () => this.#onPick(index));
-      card.addEventListener("mouseenter", () => this.#onHover(index));
+      // Rebuilt cards can enter a stationary pointer without mouse movement.
+      card.addEventListener("mousemove", event => {
+        if (event.movementX || event.movementY) this.#onHover(index);
+      });
       return card;
     }
 
