@@ -5,7 +5,7 @@
 <h1 align="center">Better Tab Switcher (Ctrl+Tab)</h1>
 
 <p align="center">
-  A tab switcher for <a href="https://zen-browser.app">Zen Browser</a>: page previews and the colors of your theme.
+  A tab switcher for <a href="https://zen-browser.app">Zen Browser</a> with page previews and compact cards.
 </p>
 
 <p align="center">
@@ -15,9 +15,11 @@
 ## Features
 
 - While you hold Ctrl, cards with previews of your recent tabs appear over the page. Tab moves forward, Shift+Tab moves back, releasing Ctrl opens the selected tab.
-- Background, colors and accent come from the theme you configured: light, dark or gradient.
+- Compact cards follow the Arc layout, with rounded previews and a centered position.
+- Colors and background follow your Zen theme.
 - A quick Ctrl+Tab press jumps straight to the previous tab without flashing the overlay (the show delay is configurable).
 - Tabs are ordered by recent use (MRU).
+- The panel fits up to five columns. Each row is centered, including the last row. Extra rows scroll vertically.
 - Arrow keys move the selection, Enter confirms, Esc cancels. Mouse movement selects a card while Ctrl is held. Keyboard navigation ignores a stationary pointer until the mouse moves again. Clicking switches immediately.
 - By default, tabs of the current space and Essentials are shown.
 

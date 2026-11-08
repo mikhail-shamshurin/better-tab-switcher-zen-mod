@@ -119,6 +119,10 @@ class FakeElement extends FakeEventTarget {
     this.parentNode = null;
   }
 
+  scrollIntoView() {
+    this.wasScrolledIntoView = true;
+  }
+
   /** The mod picks a card on mousedown (a click never reaches it in the real chrome window). */
   click() {
     this.dispatchEvent(new FakeEvent("mousedown"));
@@ -341,10 +345,11 @@ function renderedPage({ width = 1200, height = 800, failSnapshot = false } = {})
  * (keys, clicks, waiting) and read what the user sees (selected tab, overlay cards).
  */
 class ZenWindowDriver {
-  constructor({ tabs = ["A", "B", "C"], activeSpace = null, documentReady = true, browserReady = true } = {}) {
+  constructor({ tabs = ["A", "B", "C"], activeSpace = null, documentReady = true, browserReady = true, viewportWidth = 1200 } = {}) {
     this.clock = new FakeClock();
     this.prefs = new FakePrefs();
     this.document = new FakeDocument();
+    this.document.documentElement.clientWidth = viewportWidth;
     this.document.readyState = documentReady ? "complete" : "loading";
     this.window = new FakeWindow(this.document);
     this.gBrowser = new FakeTabBrowser();
@@ -439,6 +444,11 @@ class ZenWindowDriver {
 
   blurWindow() {
     this.window.dispatchEvent(new FakeEvent("blur"));
+  }
+
+  resizeWindow(width) {
+    this.document.documentElement.clientWidth = width;
+    this.window.dispatchEvent(new FakeEvent("resize"));
   }
 
   finishDocumentLoad() {
