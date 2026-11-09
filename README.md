@@ -22,6 +22,7 @@
 - The panel fits up to five columns. Each row is centered, including the last row. Extra rows scroll vertically.
 - Arrow keys move the selection, Enter confirms, Esc cancels. Mouse movement selects a card while Ctrl is held. Keyboard navigation ignores a stationary pointer until the mouse moves again. Clicking switches immediately.
 - By default, tabs of the current space and Essentials are shown.
+- Closed pinned tabs are excluded from the switcher. Loaded pinned tabs and ordinary unloaded tabs remain available.
 
 ## Installation
 

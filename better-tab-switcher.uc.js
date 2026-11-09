@@ -337,7 +337,12 @@
   }
 
   function isSwitchable(tab) {
-    return tab.isConnected && !tab.closing && !tab.hasAttribute("zen-empty-tab");
+    return tab.isConnected && !tab.closing && !tab.hasAttribute("zen-empty-tab") && !isClosedPinned(tab);
+  }
+
+  /** Closing a pinned tab leaves it in the tab strip, unloaded until clicked again: not actually open. */
+  function isClosedPinned(tab) {
+    return tab.hasAttribute("pinned") && tab.hasAttribute("pending");
   }
 
   /** Essentials and tabs without a space are shown in every space. */

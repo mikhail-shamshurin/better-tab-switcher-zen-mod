@@ -270,6 +270,36 @@ describe("tabs offered by the switcher", () => {
     assert.deepEqual(zen.overlay.titles, ["A", "B"]);
   });
 
+  it("leaves out a pinned tab the user closed (unloaded, not an open page)", () => {
+    const zen = new ZenWindowDriver({
+      tabs: ["A", { label: "Closed pin", attributes: { pinned: "true", pending: "true" } }, "B"],
+    }).loadScript();
+
+    openSwitcher(zen);
+
+    assert.deepEqual(zen.overlay.titles, ["A", "B"]);
+  });
+
+  it("still shows a pinned tab that is loaded", () => {
+    const zen = new ZenWindowDriver({
+      tabs: ["A", { label: "Pin", attributes: { pinned: "true" } }, "B"],
+    }).loadScript();
+
+    openSwitcher(zen);
+
+    assert.deepEqual([...zen.overlay.titles].sort(), ["A", "B", "Pin"]);
+  });
+
+  it("still shows an ordinary tab not yet loaded this session (not pinned)", () => {
+    const zen = new ZenWindowDriver({
+      tabs: ["A", { label: "Lazy", attributes: { pending: "true" } }, "B"],
+    }).loadScript();
+
+    openSwitcher(zen);
+
+    assert.deepEqual([...zen.overlay.titles].sort(), ["A", "B", "Lazy"]);
+  });
+
   it("shows the active space, Essentials and tabs without a space", () => {
     const zen = new ZenWindowDriver({
       activeSpace: "work",
