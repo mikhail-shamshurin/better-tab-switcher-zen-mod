@@ -12,7 +12,13 @@
 
 /* ---- Overlay ---- */
 #bts {
-  --bts-preview-height: calc(var(--bts-preview-width) * 2 / 3);
+  --bts-preview-width: 158px;
+  --bts-card-padding: 12px;
+  --bts-panel-padding: 16px;
+  --bts-panel-inset: calc(2 * var(--bts-panel-padding));
+  --bts-grid-gap: 0px;
+  --bts-max-columns: 5;
+  --bts-panel-max-width: 92vw;
   --bts-card-gap: 12px;
   --bts-footer-gap: 8px;
   --bts-card-width: calc(var(--bts-preview-width) + 2 * var(--bts-card-padding));
@@ -21,8 +27,12 @@
   inset: 0;
   z-index: 2147483000; /* above every layer of the browser UI */
   display: none;
-  align-items: center;
+  align-items: safe center;
   justify-content: center;
+  box-sizing: border-box;
+  padding-block: 5vh;
+  /* Keep the scrollbar outside the panel, so it cannot reduce the column count. */
+  overflow-y: auto;
   pointer-events: none;
   background: color-mix(in srgb, black 25%, transparent);
   backdrop-filter: blur(6px);
@@ -45,14 +55,17 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: var(--bts-panel-width);
+  width: max-content;
+  /* Round the available width down to whole cards to keep the panel snug. */
+  max-width: min(
+    calc(var(--bts-max-columns) * var(--bts-card-width) + var(--bts-panel-inset)),
+    calc(round(down, max(var(--bts-card-width), var(--bts-panel-max-width) - var(--bts-panel-inset)), var(--bts-card-width)) + var(--bts-panel-inset)),
+    var(--bts-panel-max-width)
+  );
   box-sizing: border-box;
   gap: var(--bts-grid-gap);
   padding: var(--bts-panel-padding);
-  max-width: var(--bts-panel-max-width);
-  max-height: 90vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  flex-shrink: 0;
   border-radius: 24px;
   color: var(--bts-fg);
   background: var(--zen-main-browser-background, var(--bts-bg));
@@ -70,6 +83,7 @@
   gap: var(--bts-card-gap);
   flex: 0 0 auto;
   width: var(--bts-card-width);
+  max-width: 100%;
   padding: var(--bts-card-padding);
   box-sizing: border-box;
   border-radius: 8px;
@@ -84,8 +98,8 @@
 }
 
 .bts-preview {
-  width: var(--bts-preview-width);
-  height: var(--bts-preview-height);
+  width: 100%;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border-radius: 6px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.32);

@@ -53,6 +53,10 @@ The script is split into small classes, each with one job:
 | `Settings` | the prefs from `preferences.json` |
 | `ZenWindow` | the only code that touches `gBrowser` and `gZenWorkspaces` |
 
+CSS controls card sizes, column wrapping and panel width. JavaScript creates cards and keeps the selected card visible.
+
+The overlay scrolls when the panel exceeds the window height. This keeps the scrollbar outside the panel.
+
 Tests run the script in Node against a fake Zen window and need no dependencies (Node 20 or newer):
 
 ```sh

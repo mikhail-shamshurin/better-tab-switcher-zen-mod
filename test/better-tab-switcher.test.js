@@ -580,59 +580,16 @@ describe("lifecycle", () => {
 });
 
 
-describe("card size and panel layout", () => {
-  const geometry = zen => zen.overlay.root.getAttribute("style");
-
-  it("uses smaller previews by default and fits the panel to the card count", () => {
-    const zen = new ZenWindowDriver({ tabs: ["A", "B"] }).loadScript();
-    openSwitcher(zen);
-    assert.match(geometry(zen), /--bts-preview-width: 158px/);
-    assert.match(geometry(zen), /--bts-columns: 2/);
-  });
-
-  it("keeps the reference size even when an old width preference exists", () => {
-    const zen = zenWithRecentTabs();
-    zen.setPref("preview_width", "320");
-    openSwitcher(zen);
-    assert.match(geometry(zen), /--bts-preview-width: 158px/);
-  });
-
-  it("fits four reference cards without extra panel width", () => {
-    const zen = new ZenWindowDriver({ tabs: ["A", "B", "C", "D"] }).loadScript();
-    openSwitcher(zen);
-    assert.match(geometry(zen), /--bts-panel-width: 760px/);
-  });
-
-  it("limits wide windows to five columns without removing cards", () => {
-    for (const viewportWidth of [1200, 2560]) {
-      const tabs = Array.from({ length: 9 }, (_, index) => `Tab ${index}`);
-      const zen = new ZenWindowDriver({ tabs, viewportWidth }).loadScript();
-      openSwitcher(zen);
-      assert.match(geometry(zen), /--bts-columns: 5/);
-      assert.match(geometry(zen), /--bts-panel-width: 942px/);
-      assert.equal(zen.overlay.cards.length, 9);
-    }
-  });
-
-  it("wraps cards into columns that fit the window", () => {
-    const zen = new ZenWindowDriver({ tabs: ["A", "B", "C", "D", "E"], viewportWidth: 800 }).loadScript();
-    openSwitcher(zen);
-    assert.match(geometry(zen), /--bts-columns: 3/);
-    zen.closeTab("E");
-    zen.closeTab("D");
-    zen.closeTab("C");
-    assert.match(geometry(zen), /--bts-columns: 2/);
-  });
-
+describe("overlay layout lifecycle", () => {
   it("adjusts an open panel on resize without replacing cards or selection", () => {
     const zen = zenWithRecentTabs();
     openSwitcher(zen);
     const cards = zen.overlay.cards;
     const selected = zen.overlay.selectedTitle;
     zen.resizeWindow(400);
-    assert.match(geometry(zen), /--bts-columns: 1/);
     assert.deepEqual(zen.overlay.cards, cards);
     assert.equal(zen.overlay.selectedTitle, selected);
+    assert.equal(cards.find(card => card.getAttribute("selected") === "true").wasScrolledIntoView, true);
   });
 
   it("reveals the selected card when navigating through scrollable rows", () => {
@@ -641,22 +598,5 @@ describe("card size and panel layout", () => {
     zen.press("ArrowRight");
     const selected = zen.overlay.cards.find(card => card.getAttribute("selected") === "true");
     assert.equal(selected.wasScrolledIntoView, true);
-  });
-
-  it("reserves scrollbar space before choosing the number of columns", () => {
-    const zen = new ZenWindowDriver({ viewportWidth: 630 }).loadScript();
-    openSwitcher(zen);
-    const row = zen.overlay.root.children[0];
-    row.offsetWidth = 640;
-    row.clientWidth = 626;
-    zen.resizeWindow(630);
-    assert.match(geometry(zen), /--bts-columns: 2/);
-  });
-
-  it("shrinks previews when even one card would exceed the window", () => {
-    const zen = new ZenWindowDriver({ viewportWidth: 200 }).loadScript();
-    openSwitcher(zen);
-    assert.match(geometry(zen), /--bts-preview-width: 128px/);
-    assert.match(geometry(zen), /--bts-columns: 1/);
   });
 });

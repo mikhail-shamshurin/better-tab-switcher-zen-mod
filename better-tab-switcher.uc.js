@@ -453,13 +453,6 @@
   /** The full-window overlay with one card per tab. It draws what it is given, nothing more. */
   class SwitcherOverlay {
     static #ROOT_ID = "bts";
-    static #PANEL_PADDING_PX = 16;
-    static #PANEL_BORDER_PX = 0;
-    static #CARD_PADDING_PX = 12;
-    static #GRID_GAP_PX = 0;
-    static #MAX_COLUMNS = 5;
-    static #PREVIEW_WIDTH_PX = 158;
-    static #VIEWPORT_WIDTH_RATIO = 0.92;
     static #FALLBACK_ICON = "chrome://global/skin/icons/defaultFavicon.svg";
 
     #document;
@@ -485,39 +478,12 @@
       const root = this.#ensureRoot();
       root.replaceChildren(this.#createRow(tabs, selectedIndex));
       root.setAttribute("open", "true");
-      this.#updateLayout();
       this.#revealSelectedCard();
     }
 
     resize() {
       if (!this.isVisible) return;
-      this.#updateLayout();
       this.#revealSelectedCard();
-    }
-
-    #updateLayout(scrollbarWidth = 0) {
-      const panelInset = 2 * (SwitcherOverlay.#PANEL_PADDING_PX + SwitcherOverlay.#PANEL_BORDER_PX);
-      const availableWidth = Math.floor(this.#document.documentElement.clientWidth * SwitcherOverlay.#VIEWPORT_WIDTH_RATIO) - panelInset - scrollbarWidth;
-      const cardInset = 2 * SwitcherOverlay.#CARD_PADDING_PX;
-      const previewWidth = Math.min(SwitcherOverlay.#PREVIEW_WIDTH_PX, Math.max(1, availableWidth - cardInset));
-      const cardWidth = previewWidth + cardInset;
-      const gap = SwitcherOverlay.#GRID_GAP_PX;
-      const columns = Math.max(1, Math.min(SwitcherOverlay.#MAX_COLUMNS, this.#cards.length, Math.floor((availableWidth + gap) / (cardWidth + gap))));
-      this.#root.setAttribute("style", [
-        `--bts-preview-width: ${previewWidth}px`,
-        `--bts-columns: ${columns}`,
-        `--bts-panel-width: ${columns * cardWidth + (columns - 1) * gap + panelInset + scrollbarWidth}px`,
-        `--bts-card-padding: ${SwitcherOverlay.#CARD_PADDING_PX}px`,
-        `--bts-grid-gap: ${gap}px`,
-        `--bts-panel-padding: ${SwitcherOverlay.#PANEL_PADDING_PX}px`,
-        `--bts-panel-border: ${SwitcherOverlay.#PANEL_BORDER_PX}px`,
-        `--bts-panel-max-width: ${SwitcherOverlay.#VIEWPORT_WIDTH_RATIO * 100}vw`,
-      ].join("; "));
-      if (scrollbarWidth === 0) {
-        const row = this.#root.children[0];
-        const gutter = row.offsetWidth - row.clientWidth - 2 * SwitcherOverlay.#PANEL_BORDER_PX;
-        if (gutter > 0) this.#updateLayout(gutter);
-      }
     }
 
     /** Moves the "selected" card without touching the DOM nodes, so a click in flight survives. */
