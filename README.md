@@ -16,7 +16,7 @@
 
 - While you hold Ctrl, cards with previews of your recent tabs appear over the page. Tab moves forward, Shift+Tab moves back, releasing Ctrl opens the selected tab.
 - Compact cards follow the Arc layout, with rounded previews and a centered position.
-- Colors and background follow your Zen theme.
+- Colors and background follow your Zen theme. The panel uses the workspace color scheme to keep tab titles readable.
 - A quick Ctrl+Tab press jumps straight to the previous tab without flashing the overlay (the show delay is configurable).
 - Tabs are ordered by recent use (MRU).
 - The panel fits up to five columns. Each row is centered, including the last row. Extra rows scroll vertically.

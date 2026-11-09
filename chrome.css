@@ -12,6 +12,8 @@
 
 /* ---- Overlay ---- */
 #bts {
+  /* Resolve light-dark() against the workspace, as Zen does for its tab strip. */
+  color-scheme: var(--toolbar-color-scheme, normal);
   --bts-preview-width: 158px;
   --bts-card-padding: 12px;
   --bts-panel-padding: 16px;
