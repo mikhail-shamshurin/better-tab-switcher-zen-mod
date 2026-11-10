@@ -8,7 +8,7 @@
   "readme": "README.md",
   "image": "image.png",
   "author": "mikhail-shamshurin",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "tags": ["tabs", "keyboard"],
   "fork": ["zen"],
   "scripts": {
@@ -20,5 +20,5 @@
   },
   "supportsUnload": true,
   "createdAt": "2026-11-01",
-  "updatedAt": "2026-11-09"
+  "updatedAt": "2026-11-10"
 }
